@@ -41,17 +41,17 @@ RUN apt-get -qqy update \
     && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && apt install -qqy --no-install-recommends ./google-chrome-stable_current_amd64.deb \
     && apt-add-repository ppa:remmina-ppa-team/remmina-next \
-	&& apt update \
-	&& apt install curl \
+	&& apt update -y \
+	&& apt install -qqy curl \
     && curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg \
     && echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list \
-    && apt update \
-    && apt install cloudflare-warp \
+    && apt -qqy update \
+    && apt install -qqy cloudflare-warp \
     && apt install -qqy --no-install-recommends remmina remmina-plugin-rdp remmina-plugin-secret \
     && apt-add-repository ppa:obsproject/obs-studio \
-    && apt update \
+    && apt -qqy update \
     && apt install -qqy --no-install-recommends obs-studio \
-    && apt install unzip \
+    && apt install -qqy unzip \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
