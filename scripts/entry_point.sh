@@ -6,7 +6,7 @@
 #==============================================
 
 mkdir -p /Desktop
-cat << EOF >  /Desktop/Chromium.desktop
+cat << EOF > /Desktop/Chromium.desktop
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -20,12 +20,17 @@ StartupNotify=true
 EOF
 chmod +x /Desktop/Chromium.desktop
 
+# Handle non-sudo environments
 if ! whoami &> /dev/null; then
   if [ -w /etc/passwd ]; then
     echo "${USER_NAME:-ubuntu}:x:$(id -u):0:${USER_NAME:-ubuntu} user:/home/${USER_NAME:-ubuntu}:/sbin/nologin" >> /etc/passwd
   fi
 fi
 
+# Start the Cloudflare WARP service
+/opt/warp-svc/warp-svc &
+
+# Start supervisord with specified configuration
 /usr/bin/supervisord --configuration /etc/supervisor/supervisord.conf &
 
 SUPERVISOR_PID=$!
