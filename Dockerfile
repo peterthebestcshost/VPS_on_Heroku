@@ -20,6 +20,7 @@ RUN chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo
 
 RUN cp /usr/share/novnc/vnc.html /usr/share/novnc/index.html
 
+# Copy scripts to /opt/bin/
 COPY scripts/* /opt/bin/
 
 # Add Supervisor configuration file
@@ -34,10 +35,8 @@ RUN  mkdir -p /var/run/supervisor /var/log/supervisor \
 # Creating base directory for Xvfb
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 
-# Start Cloudflare WARP service and Supervisor
-COPY entry_point.sh /opt/bin/entry_point.sh
+# Set the entry point
 RUN chmod +x /opt/bin/entry_point.sh
-
 CMD ["/opt/bin/entry_point.sh"]
 
 #============================
@@ -85,4 +84,3 @@ RUN apt-get update -qqy \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
-
