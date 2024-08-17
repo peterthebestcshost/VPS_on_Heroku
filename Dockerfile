@@ -52,10 +52,9 @@ RUN apt-get -qqy update \
     && apt-add-repository ppa:remmina-ppa-team/remmina-next \
     && apt update -y \
     && apt install -qqy curl \
-    && curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list \
     && apt -qqy update \
-    && apt install -qqy cloudflare-warp \
+	&& apt -qqy install python3 \
+	&& apt -qqy install python3-pip \
     && apt install -qqy --no-install-recommends remmina remmina-plugin-rdp remmina-plugin-secret \
     && apt-add-repository ppa:obsproject/obs-studio \
     && apt -qqy update \
